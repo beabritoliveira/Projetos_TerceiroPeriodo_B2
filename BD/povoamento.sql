@@ -56,5 +56,28 @@ BEGIN
 	END WHILE; 
 END $$
 DELIMITER ;
-
 CALL povoar_funcionario(100); /* Chamada do povoamento da tabela funcionario */
+
+
+/*Povoamento da tabela licenca_sanitaria*/
+DELIMITER $$
+CREATE PROCEDURE criando_alvaraSanitaria(in licenca int)
+BEGIN
+	DECLARE lic int;
+	DECLARE id int;
+	SET id = 1;	
+		WHILE licenca > 1 DO
+			SET lic = RAND() * 1000;
+            
+            WHILE id > 10000000000000 && id < 100000000000000 DO
+				SET id = RAND() * 100000000000000;
+			END WHILE;
+            
+			INSERT INTO licenca_sanitaria (num_licenca, data_emissao, validade, cnpj)
+			VALUES (CAST(lic AS char), 191203, 201203, CAST(id AS char));
+            
+            SET licenca = licenca - 1;
+		END WHILE;
+END $$
+DELIMITER ;
+CALL criando_alvaraSanitaria(200);
