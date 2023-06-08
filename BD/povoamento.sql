@@ -325,4 +325,42 @@ CALL inserir_itemCardapio(100);
 
 
 
+/*POVOAMENTO CARDAPIO*/
 
+CREATE TABLE cardapio(
+	id_restaurante int not null,
+    id_cardapio int not null AUTO_INCREMENT,
+    CONSTRAINT pk_cardapio PRIMARY KEY(id_cardapio, id_restaurante)
+);
+
+
+DELIMITER $$
+CREATE PROCEDURE cadastrar_cardapio(in vezes int)
+BEGIN
+	DECLARE cardap int;
+    DECLARE min int;
+    DECLARE max int;
+    DECLARE incrementar int;
+    DECLARE sorteio int;
+    SET incrementar = 0;
+    
+    
+    WHILE incrementar < vezes DO
+		SET sorteio = RAND()*1000;
+		SET min = (SELECT MIN(id_restaurante) FROM restaurante);
+		SET max = (SELECT MAX(id_restaurante) FROM restaurante);
+        
+		WHILE sorteio > max DO
+			SET sorteio = RAND()*1000;
+		END WHILE;
+		
+		INSERT INTO cardapio (id_restaurante)
+		VALUES(sorteio);
+        
+        SET incrementar = incrementar + 1;
+    END WHILE;
+    
+END $$
+DELIMITER ;
+
+CALL cadastrar_cardapio(100);
