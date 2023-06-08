@@ -51,10 +51,10 @@ CREATE table federacao(
    	CONSTRAINT pk_federacao PRIMARY KEY (id_fed)   
 );
 
-CREATE table cardapio(
-	id_cardapio int not null AUTO_INCREMENT,  	
-  	id_restaurante int not null, /*FK que referencia a tabela restaurante*/ 
-	CONSTRAINT pk_cardapio PRIMARY KEY (id_cardapio, id_restaurante)
+CREATE TABLE cardapio(
+	id_restaurante int not null,
+    id_cardapio int not null AUTO_INCREMENT,
+    CONSTRAINT pk_cardapio PRIMARY KEY(id_cardapio, id_restaurante)
 );
 
 CREATE table itemCardapio(
