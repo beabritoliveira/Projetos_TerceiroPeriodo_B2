@@ -298,13 +298,13 @@ BEGIN
     DECLARE tempo int;
     DECLARE c_possivel int;
     DECLARE carpio int;
-    SET c_possivel = 1000/*(SELECT COUNT(id_cardapio) from cardapio)*/;
+    SET c_possivel = (SELECT COUNT(id_cardapio) from cardapio);
     SET carpio = 0;
     
     WHILE registro > 0 DO
 		SET preco = RAND()*100;
 		SET tempo = RAND()*1000;
-		
+		SET carpio = ROUND(RAND()*100);
 		
 		WHILE carpio > c_possivel or carpio = 0 DO
 			SET carpio = ROUND(RAND()*100);
