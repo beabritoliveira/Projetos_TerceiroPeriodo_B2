@@ -255,3 +255,38 @@ end while;
 END $$
 DELIMITER ;
 CALL povoar_Restaurante();
+
+
+/*POVOANDO TRABALHA_EM*/
+DELIMITER $$
+CREATE PROCEDURE povoar_trabalha_em()
+BEGIN
+	DECLARE func varchar(35);
+    DECLARE total int;
+    DECLARE incremento int;
+    DECLARE restaurante int;
+    DECLARE choice int;
+    
+    SET incremento = 1;
+	SET total = (SELECT count(id_funcionario) from funcionario);
+	SET restaurante = (SELECT count(id_restaurante) from restaurante);
+    
+    WHILE incremento <= total DO
+    
+		SET func = (SELECT funcao from funcionario where id_funcionario = incremento);
+        SET choice = RAND() * 1000;
+        WHILE choice > restaurante DO
+			 SET choice = RAND() * 1000;
+		END WHILE;
+		IF func !='Chef' THEN
+			INSERT INTO trabalha_em (id_restaurante, id_funcionario)
+            VALUES (choice, incremento);
+		END IF;
+		SET incremento = incremento + 1;
+	END WHILE;
+END $$
+DELIMITER ;
+
+CALL povoar_trabalha_em();
+
+
