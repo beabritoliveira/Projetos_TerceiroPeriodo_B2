@@ -21,7 +21,7 @@ BEGIN
 			SET sex = 'F';
 		END IF;
 		/*Data de contratação*/
-		WHILE dat > 231231 && dat < 170101 DO
+		WHILE dat > 231231 and dat < 170101 DO
 			SET dat = (CAST((RAND() *1000000) AS date));
 		END WHILE;
 		/*Funcao*/
