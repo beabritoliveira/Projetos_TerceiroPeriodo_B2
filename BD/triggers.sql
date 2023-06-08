@@ -13,10 +13,3 @@ CREATE TRIGGER povoar_trabalha_em_CHEF AFTER INSERT ON restaurante FOR EACH ROW
 	VALUES (new.id_restaurante, new.id_chefe);
 END $$
 
-
-DELIMITER $$   
-CREATE TRIGGER cadastrar_cardapio AFTER INSERT ON restaurante FOR EACH ROW 
-	BEGIN
-    INSERT INTO trabalha_em (id_restaurante)
-	VALUES (new.id_restaurante);
-END $$
