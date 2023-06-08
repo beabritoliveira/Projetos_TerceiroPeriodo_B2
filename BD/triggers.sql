@@ -1,4 +1,12 @@
 DELIMITER $$   
+CREATE TRIGGER testando AFTER INSERT ON licenca_sanitaria FOR EACH ROW 
+	BEGIN
+		INSERT INTO conexao (ordem, num_lic)
+		VALUES((select COUNT(num_licenca) from licenca_sanitaria), new.num_licenca);
+        /*(CAST(lic AS CHAR));*/
+END $$
+
+DELIMITER $$   
 CREATE TRIGGER povoar_trabalha_em_CHEF AFTER INSERT ON restaurante FOR EACH ROW 
 	BEGIN
     INSERT Into trabalha_em (id_restaurante, id_funcionario)
@@ -6,9 +14,8 @@ CREATE TRIGGER povoar_trabalha_em_CHEF AFTER INSERT ON restaurante FOR EACH ROW
 END $$
 
 DELIMITER $$   
-CREATE TRIGGER testando AFTER INSERT ON licenca_sanitaria FOR EACH ROW 
+CREATE TRIGGER cadastrar_cardapio AFTER INSERT ON restaurante FOR EACH ROW 
 	BEGIN
-		INSERT INTO conexao (ordem, num_lic)
-		VALUES((select COUNT(num_licenca) from licenca_sanitaria), new.num_licenca);
-        /*(CAST(lic AS CHAR));*/
+    INSERT INTO trabalha_em (id_restaurante)
+	VALUES (new.id_restaurante);
 END $$
