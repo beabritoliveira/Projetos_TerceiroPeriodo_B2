@@ -290,3 +290,39 @@ DELIMITER ;
 CALL povoar_trabalha_em();
 
 
+/*POVOAR ITENS PEDIDO*/
+DELIMITER $$
+CREATE PROCEDURE inserir_itemCardapio(in registro int)
+BEGIN
+	DECLARE preco DECIMAL(5,2);
+    DECLARE tempo int;
+    DECLARE c_possivel int;
+    DECLARE carpio int;
+    SET c_possivel = 1000/*(SELECT COUNT(id_cardapio) from cardapio)*/;
+    SET carpio = 0;
+    
+    WHILE registro > 0 DO
+		SET preco = RAND()*100;
+		SET tempo = RAND()*1000;
+		
+		
+		WHILE carpio > c_possivel or carpio = 0 DO
+			SET carpio = ROUND(RAND()*100);
+            
+		END WHILE;
+		WHILE tempo > 300 DO
+			SET tempo = RAND()*1000;
+		END WHILE;
+        
+		INSERT INTO itemCardapio (id_cardapio, nome_item, valor, minutos_preparo)
+		VALUES (carpio, null, preco, tempo);
+        
+        SET registro = registro - 1;
+	END WHILE;
+END $$
+DELIMITER ;
+CALL inserir_itemCardapio(100);
+
+
+
+
